@@ -1,0 +1,133 @@
+<template>
+  <view>
+    <view style="margin-top:70px;" class="p-20">
+      <block wx:for="{{calorie}}" wx:key>
+        <jvc-media
+          @Tap="Tap"
+          data-id="{{item.detail}}"
+          thumb="{{item.img}}"
+          thumb-style="border-radius: 30rpx"
+          title="{{item.title}}"
+          label="{{item.calorie}}"
+        ></jvc-media>
+      </block>
+    </view>
+    <view class="header">
+      <wux-search-bar
+        clear=""
+        show-cancel
+        value="{{ keyWord }}"
+        controlled
+        placeholder="Search"
+        bind:confirm="onConfirm"
+        bind:clear="onClear"
+      />
+      <wux-tabs scroll controlled current="{{ currentTab }}" bindchange="onTabChange">
+        <block wx:for="{{tabs}}" wx:key>
+          <wux-tab key="tab{{index}}" title="{{item.text}}"></wux-tab>
+        </block>
+      </wux-tabs>
+    </view>
+  </view>
+</template>
+
+<script>
+// button,icon,input,cell
+import wepy from 'wepy';
+import api from '@/api/api';
+import tip from '@/utils/tip';
+import { calorieTabs } from '@/utils/tabs';
+export default class recipe extends wepy.page {
+  config = {
+    navigationBarTitleText: '热量查询',
+    usingComponents: {
+      'jvc-media': '../../wux/jvc_media/index',
+      'wux-search-bar': '../../wux/search-bar/index',
+      'wux-tabs': '../../wux/tabs/index',
+      'wux-tab': '../../wux/tab/index',
+      'wux-badge': '../../wux/badge/index'
+    }
+  };
+  components = {};
+
+  data = {
+    keyWord: '',
+    //
+    currentTab: 'tab0',
+    tabs: calorieTabs,
+    calorie: [],
+
+    filter: {
+      list: 1,
+      page: 1
+    }
+  };
+
+  computed = {};
+
+  methods = {
+    onConfirm(e) {
+      console.log(e);
+      this.calorie = [];
+      this.keyWord = e.detail.value;
+      this.getCalorieByKeyWord();
+    },
+    onClear() {},
+    onTabChange(e) {
+      console.log(e);
+      this.currentTab = e.detail.key;
+      let index = parseInt(this.currentTab.substr(3));
+      this.filter.list = this.tabs[index].list;
+      this.filter.page = 1;
+      this.calorie = [];
+
+      this.getCalorie();
+    },
+    Tap(e) {
+      let { id } = e.currentTarget.dataset;
+      // wepy.navigateTo({ url: '/pages/recipe/recipe?id=' + id });
+      console.log(e);
+    }
+  };
+
+  events = {};
+  onBottom;
+  onLoad() {
+    this.getCalorie();
+  }
+  onReachBottom() {
+    console.log('touchBottom');
+    if (this.keyWord) {
+      return;
+    }
+    this.filter.page++;
+    this.getCalorie();
+  }
+  async getCalorieByKeyWord() {
+    tip.loading();
+    let res = await api.get(`/getCalorieByKeyWord`, { keyWord: this.keyWord });
+    this.calorie = res.data;
+    this.keyWord = '';
+    this.$apply();
+    tip.loaded();
+  }
+  async getCalorie() {
+    tip.loading();
+    let res = await api.get(`/getCalorie`, this.filter);
+    console.log(res.data);
+    this.calorie = this.calorie.concat(res.data);
+    this.$apply();
+    tip.loaded();
+  }
+}
+</script>
+
+<style lang="less">
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+}
+</style>

@@ -1,0 +1,16 @@
+<view class="jvc-media">
+    <view bindtap="onTap" class="wux-class wux-media {{ align ? 'wux-media--align-' + align : '' }}">
+        <view class="wux-media__hd">
+            <image mode="aspectFill" class="wux-media__thumb" src="{{ thumb?thumb:'http://mp.jycais.cn/uploadDir/upload_e8a40217607982e65ad8f04e82dc8b5c.jpg' }}" style="{{ thumbStyle }}" />
+        </view>
+        <view class="wux-media__bd">
+            <view class="wux-media__title" wx:if="{{ title }}">{{ title }}</view>
+            <view class="wux-media__desc" wx:if="{{ label }}">{{ label }}</view>
+            <view class="wux-media__place">
+                <text>{{ username }}</text>
+                <text>{{dateline}}</text>
+            </view>
+        </view>
+    </view>
+    <slot></slot>
+</view>

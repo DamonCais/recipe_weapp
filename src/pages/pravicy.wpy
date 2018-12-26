@@ -1,0 +1,360 @@
+<template>
+  <view class="p-20 bg-white">
+    <rich-text nodes="{{richText}}"></rich-text>
+  </view>
+</template>
+
+<script>
+// button,icon,input,cell
+import wepy from 'wepy';
+export default class pravicy extends wepy.page {
+  config = {
+    navigationBarTitleText: '聚微超隐私保护政策',
+    usingComponents: {
+      'jvc-button': '../iview/jvc_button/index',
+      'jvc-icon': '../iview/jvc_icon/index',
+      'jvc-media': '../wux/jvc_media/index',
+      'jvc-media-b': '../wux/jvc_media_b/index',
+      'wux-tag': '../wux/tag/index',
+
+      'i-input': '../../iview/input/index',
+      'i-cell-group': '../../iview/cell-group/index',
+      'i-cell': '../../iview/cell/index',
+      'i-panel': '../../iview/panel/index',
+      'i-load-more': '../../iview/load-more/index'
+    }
+  };
+  components = {};
+
+  data = {
+    richText: `<p>
+    <strong><span style="font-family: Calibri;font-size: 16px"><span style="font-family:宋体">提示条款：</span></span></strong>
+</p>
+<p style="text-indent:28px">
+    <span style=";font-family:微软雅黑;font-size:16px">您的信任对我们非常重要，我们深知个人信息对您的重要性，我们将按法律法规要求，采取相应安全保护措施，尽力保护您的个人信息安全可控。鉴此，</span><span style=";font-family:微软雅黑;font-size:16px">聚微超</span><span style=";font-family:微软雅黑;font-size:16px">（或简称</span><span style=";font-family:微软雅黑;font-size:16px">“</span><span style=";font-family:微软雅黑;font-size:16px">我们</span><span style=";font-family:微软雅黑;font-size:16px">”</span><span style=";font-family:微软雅黑;font-size:16px">）制定本《</span><span style=";font-family:微软雅黑;font-size:16px">聚微超</span><span style=";font-family:微软雅黑;font-size:16px">隐私权政策》（下称</span><span style=";font-family:微软雅黑;font-size:16px">“</span><span style=";font-family:微软雅黑;font-size:16px"><span style="font-family:微软雅黑">本政策</span>/本隐私权政策</span><span style=";font-family:微软雅黑;font-size:16px">”</span><span style=";font-family:微软雅黑;font-size:16px">）并提醒您：</span>
+</p>
+<p style="text-indent:28px">
+    <span style=";font-family:微软雅黑;font-size:16px">本政策适用于</span><span style=";font-family:微软雅黑;font-size:16px">聚微超</span><span style=";font-family:微软雅黑;font-size:16px">产品和服务。如我们关联公司产品或服务中</span><span style=";font-family:微软雅黑;font-size:16px">使</span><span style=";font-family:微软雅黑;font-size:16px">用了</span><span style=";font-family:微软雅黑;font-size:16px">聚微超</span><span style=";font-family:微软雅黑;font-size:16px">提供的产品或服务但未设独立法律声明及隐私权政策的，则本政策同样适用于该部分产品或服务。</span>
+</p>
+<p style="text-indent:28px">
+    <span style=";font-family:微软雅黑;font-size:16px">需要特别说明的是，本政策不适用于其他第三方向您提供的服务。例如与</span><span style=";font-family:微软雅黑;font-size:16px">聚微超</span><span style=";font-family:微软雅黑;font-size:16px">合作的商家向您提供相关服务时，您向其提供的个人信息不适用本政策。</span>
+</p>
+<p style="text-indent:28px">
+    <span style=";font-family:微软雅黑;font-size:16px">本政策与您使用我们的服务关系密切，我们建议您仔细阅读并理解本政策全部内容，做出您认为</span><span style=";font-family:微软雅黑;font-size:16px">可接受</span><span style=";font-family:微软雅黑;font-size:16px">的那个的选择。我们努力用通俗易懂、简明扼要的文字表达，并对本政策中与您的权益存在重大关系的条款采用粗体字进行标注以提示您注意。</span>
+</p>
+<p style="text-indent:28px">
+    <span style=";font-family:微软雅黑;font-size:16px">您使用或继续使用我们的服务，即意味着同意我们按照本《隐私权政策》收集、使用、储存和分享您的相关信息。</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">本政策将帮助您了解</span><span style=";font-family:微软雅黑;font-size:16px">以</span><span style=";font-family:微软雅黑;font-size:16px">下内容：</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">1、 我们如何收集和使用您的个人信息</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">2、 我们如何使用</span><span style=";font-family:微软雅黑;font-size:16px">微信小程序唯一标识及同类技术</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">3、 我们如何共享、转让、公开披露您的个人信息</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">4、 信息安全</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">5、 您的权利</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">6、 我们如何处理未成年人的个人信息</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">7、 您的个人信息如何在全球范围转移</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">8、 本政策如何更新</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">9、 如何联系我们</span>
+</p>
+<p>
+    <strong><span style="font-family: Calibri;font-size: 16px">&nbsp;</span></strong>
+</p>
+<p>
+    <strong><span style="font-family: Calibri;font-size: 16px"><span style="font-family:宋体">一、</span> <span style="font-family:宋体">我们如何收集和使用您的个人信息</span></span></strong>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">我们会处于本政策所述的以下目的，</span><span style=";font-family:微软雅黑;font-size:16px">收集</span><span style=";font-family:微软雅黑;font-size:16px">和使用您的个人信息：</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">&nbsp;</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">(一) 帮助您成为我们的用户</span>
+</p>
+<p style="text-indent:28px">
+    <span style=";font-family:微软雅黑;font-size:16px">成为我们的用户，以便我们为您提供用户服务，您需要提供手机号码，并创建用户名和密码。如果您仅使用浏览的基本服务，您不需要注册成为我们的用户及提供上述信息。</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">(二) 为您展示和推送商品或服务</span>
+</p>
+<p style="text-indent:28px">
+    <span style=";font-family:微软雅黑;font-size:16px">为改善我们的产品或服务、向您提供更多服务，我们会根据您的浏览记录，设备信息，位置信息，订单信息，提取您的浏览</span><span style=";font-family:微软雅黑;font-size:16px">偏好</span><span style=";font-family:微软雅黑;font-size:16px">，行为习惯，位置信息等特征，基于特征标签进行间接人群画像并展示、推送信息。</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">(三) 向您提供商品或服务</span>
+</p>
+<p style="text-indent:28px">
+    <span style=";font-family:微软雅黑;font-size:16px">1. 您向我们提供的信息</span>
+</p>
+<p style="text-indent:28px">
+    <span style=";font-family:微软雅黑;font-size:16px">为了方便您进行换电服务，您需要提供位置信息，如果我</span><span style=";font-family:微软雅黑;font-size:16px">们</span><span style=";font-family:微软雅黑;font-size:16px">没委托第三方向您交付时，我们会在征得您同意后将上述信息共享给第三方。</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">为了便于向您交付商品或服务，您需要提供</span><span style=";font-family:微软雅黑;font-size:16px">本人姓名、手机号、身份证号、紧急联系人、紧急联系人手机号码等</span><span style=";font-family:微软雅黑;font-size:16px">。</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">为了完成交易，您可能需要提供第三方帐号（如支付宝、微信等）选择付款方式，以便我们了解您的支付状态。</span>
+</p>
+<p style="text-indent:28px">
+    <span style=";font-family:微软雅黑;font-size:16px">2. 在您使用</span><span style=";font-family:微软雅黑;font-size:16px">聚微超</span><span style=";font-family:微软雅黑;font-size:16px">服务的过程中，</span><span style=";font-family:微软雅黑;font-size:16px">聚微超</span><span style=";font-family:微软雅黑;font-size:16px">会按照如下方式收集您在使用服务时主动提供或因为使用服务而产生的信息，用以向您提供服务、优化我们的服务以及保障您的帐号安全：</span>
+</p>
+<p style="text-indent:28px">
+    <span style=";font-family:微软雅黑;font-size:16px"><span style="font-family:微软雅黑">设备信息：我们会根据您在软件安装及使用中授予的具体权限，接收并记录您所用的设备相关信息（例如：设备型号、操作系统版本、设备设置、唯一设备标识符等软硬件特征信息）、设备所在位置相关信息（例如：</span>IP地址、GPS位置以及能够提供相关信息的WLAN接入点、蓝牙和基站等传感器信息）。</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px"><span style="font-family:微软雅黑">日志信息：当您使用我们的网站或客户端提供的产品或服务时，我们会自动收集您对我们服务的详细使用情况，作为有关网络日志保存。例如您的换电记录、</span>IP地址、电信运营商、使用的语言、访问日期和时间及您访问的网页记录等。</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px"><span style="font-family:微软雅黑">位置信息：您开启设备定位功能并使用我们基于位置提供的相关服务时，收集的有关您位置的信息，包括：您通过具有定位功能的移动设备使用我们的服务时，通过</span>GPS或WiFi等方式收集的您的地理位置信息；您或其他用户提供的包含您所处地理位置的实时信息，例如您提供的账户信息中包含的您所在的地区信息，您或其他人上传的显示您当前或曾经所处地理位置的共享信息，您或他人共享的照片包含的地理标记信息；您可以通过关闭定位功能，停止对您的地理位置信息的收集。</span>
+</p>
+<p style="text-indent:28px">
+    <span style=";font-family:微软雅黑;font-size:16px">注意！单独的设备信息、日志信息、位置信息等是无法识别特定自然人身份的信息。如果我</span><span style=";font-family:微软雅黑;font-size:16px">们</span><span style=";font-family:微软雅黑;font-size:16px">将这类个人信息与其他信息结合用户识别特定自然人身份，或者将其与个人信息结合使用，则在结合使用期间，这类非个人信息将被视为个人信息，除取得您授权或法律法规另有规定外，我们会将该类个人信息做匿名化，去标识化处理。</span>
+</p>
+<p style="text-indent:28px">
+    <span style=";font-family:微软雅黑;font-size:16px">订单信息：我们会收集您在使用我们服务过程中产生的订单信息用</span><span style=";font-family:微软雅黑;font-size:16px">于</span><span style=";font-family:微软雅黑;font-size:16px">向您展示及便于您对订单进行管理。</span>
+</p>
+<p style="text-indent:28px">
+    <span style=";font-family:微软雅黑;font-size:16px"><span style="font-family:微软雅黑">联系信息：当您与我们联系时，我们可能会保存您的通信</span>/通话记录和内容或您留下的联系方式等信息，以便与您联系或帮助您解决问题，或记录相关问题的处理方案</span><span style=";font-family:微软雅黑;font-size:16px">及</span><span style=";font-family:微软雅黑;font-size:16px">结果。</span>
+</p>
+<p style="text-indent:28px">
+    <span style=";font-family:微软雅黑;font-size:16px">3. 我们通过间接获得方式收集到的您的个人信息</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">为了确认交易状态及为您提供售后与争议解决服务，我们会通过您基于交易所选择的交易对象、支付机构、配送公司等收集与交易进度相关的您的交易、支付、物流信息，或将您的交易信息共享给上述服务提供者。</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">当您通过我们产品后服务使用上述服务时，您授权我们根据实际业务及合作需要从我们关联公司处接收、汇总、分析我们确认其来源合法或您授权通过其向我们提供的您的个人信息或交易信息。</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">如您拒绝提供上述信息或拒绝授权，可能无法使用我们关联公司的相应产品或服务，或者无法展示相关信息，但不影响使用</span><span style=";font-family:微软雅黑;font-size:16px">聚微超</span><span style=";font-family:微软雅黑;font-size:16px">的部分功能。</span>
+</p>
+<p style="text-indent:28px">
+    <span style=";font-family:微软雅黑;font-size:16px">4. 其他用途</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">我们将信息用于本政策</span><span style=";font-family:微软雅黑;font-size:16px">未</span><span style=";font-family:微软雅黑;font-size:16px">载明的其他用途，或者将基于特定目的</span><span style=";font-family:微软雅黑;font-size:16px">收集</span><span style=";font-family:微软雅黑;font-size:16px">而来的信息用</span><span style=";font-family:微软雅黑;font-size:16px">于</span><span style=";font-family:微软雅黑;font-size:16px">其他目的，会事先征求您的同意。</span>
+</p>
+<p style="text-indent:28px">
+    <span style=";font-family:微软雅黑;font-size:16px">5. 另外，根据相关法律法规及国家标准，以下情形中，我们可能会收集、使用您的相关个人信息无需征求您的授权同意： </span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">1) 与国家安全、国防安全等国家利益直接相关的；与公共安全、公共卫生、公众知情等重大公共利益直接相关的；</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">2) 与犯罪侦查、起诉、审判和判决执行等直接相关的；</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">3) 出于维护</span><span style=";font-family:微软雅黑;font-size:16px">您</span><span style=";font-family:微软雅黑;font-size:16px">或其他个人的生命、财产、声誉等重大合法权益但又很难得到本人同意的；</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">4) 所收集的个人信息是您自行向社会公众公开的；</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">5) 从合法公开披露的信息中收集个人信息的，如合法的新闻报道、政府信息公开等渠道；</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">6) 根据您要求签订和履行合同所必需的； </span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">7) 用于维护所提供的产品或服务的安全稳定运行所必需的，例如发现、处置产品或服务的故障；</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">8) 为开展合法的新闻报道所必需的；</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">9) 出于公共利益开展统计或学术研究所必要，且其对外提供学术研究或描述的结果时，对结果中所包含的个人信息进行去标识化处理的；</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">10) 法律法规规定的其他情形。</span>
+</p>
+<p>
+    <strong><span style="font-family: Calibri;font-size: 16px">&nbsp;</span></strong>
+</p>
+<p>
+    <strong><span style="font-family: Calibri;font-size: 16px"><span style="font-family:宋体">二、</span> <span style="font-family:宋体">我们如何使用</span></span></strong><strong><span style="font-family: 宋体;font-size: 16px"><span style="font-family:宋体">小程序用户唯一标识及同类技术</span></span></strong>
+</p>
+<p>
+    <span style=";font-family:Calibri;font-size:14px">&nbsp;</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px"><span style="font-family:微软雅黑">（一）</span> </span><span style=";font-family:微软雅黑;font-size:16px">小程序用户唯一标识</span>
+</p>
+<p style="text-indent:28px">
+    <span style=";font-family:微软雅黑;font-size:16px">为了</span><span style=";font-family:微软雅黑;font-size:16px">让</span><span style=";font-family:微软雅黑;font-size:16px">您获得更轻松的访问体验、向您推荐您可能感兴趣的内容，我们会</span><span style=";font-family:微软雅黑;font-size:16px">同步储存您在使用我们产品过程中的相关访问数据，</span><span style=";font-family:微软雅黑;font-size:16px">通常包含标识符、站点名称以及一些号码和字符。</span><span style=";font-family:微软雅黑;font-size:16px">借助于数据存储，并结合统计事件发送，将对您的偏好与需求进行分析，从而优化推荐内容。</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">（二）</span><span style=";font-family:微软雅黑;font-size:16px">其他同类技术</span>
+</p>
+<p style="text-indent:28px">
+    <span style=";font-family:微软雅黑;font-size:16px">除小程序用户唯一标识外，我们还会在您使用我们产品的过程中，使用其它同类技术。我们会跟踪您的每次访问，帮助我们了解您的喜好，以便我们主动改善我们的产品和服务，改善用户体验。</span>
+</p>
+<p>
+    <span style=";font-family:Calibri;font-size:14px">&nbsp;</span>
+</p>
+<p>
+    <strong><span style="font-family: Calibri;font-size: 16px"><span style="font-family:宋体">三、</span> <span style="font-family:宋体">我们如何共享、转让、公开披露您的个人信息</span></span></strong>
+</p>
+<p>
+    <span style=";font-family:Calibri;font-size:14px">&nbsp;</span>
+</p>
+<p style="text-indent:28px">
+    <span style=";font-family:微软雅黑;font-size:16px"><span style="font-family:微软雅黑">目前，我们不会主动共享或转让您的个人信息至第三方，如存在其他共享或转让您的个人信息或您需要我们将您的个人信息共享或转让至第三方情形时，我们会直接或确认第三方征得您对述行为的明示同意。</span> </span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px"><span style="font-family:微软雅黑">我们不会对外公开披露其收集的个人信息，如必须公开披露时，我们会向您告知此次公开披露的目的、披露信息的类型及可能涉及的敏感信息，并征得您的明示同意。</span> </span>
+</p>
+<p style="text-indent:28px">
+    <span style=";font-family:微软雅黑;font-size:16px"><span style="font-family:微软雅黑">随着我们业务的持续发展，我们有可能进行合并、收购、资产转让等交易，我们将告知您相关情形，按照法律法规及不低于本指引所要求的标准继续保护或要求新的控制者继续保护您的个人信息。</span> </span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">另外，根据相关法律法规及国家标准，以下情形中，我们可能会共享、转让、公开披露个人信息</span><span style=";font-family:微软雅黑;font-size:16px">而</span><span style=";font-family:微软雅黑;font-size:16px">无需事先征得个人信息主体的授权同意：</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">1） 与国家安全、国防安全直接相关的；</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">2） 与公共安全、公共卫生、重大公共利益直接相关的；</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">3） 与犯罪侦查、起诉、审判和判决执行等直接相关的；</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">4） 出于维护个人信息主体或其他个人的生命、财产等重大合法权益但又很难得到本人同意的；</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">5） 个人信息主体自行向社会公众公开的个人信息；</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">6） 从合法公开披露的信息中收集个人信息的，如合法的新闻报道、政府信息公开等渠道。</span>
+</p>
+<p>
+    <span style=";font-family:Calibri;font-size:16px">&nbsp;</span>
+</p>
+<p>
+    <strong><span style="font-family: Calibri;font-size: 16px"><span style="font-family:宋体">四、</span> <span style="font-family:宋体">信息安全</span></span></strong>
+</p>
+<p>
+    <span style=";font-family:Calibri;font-size:16px">&nbsp;</span>
+</p>
+<p style="text-indent:28px">
+    <span style=";font-family:微软雅黑;font-size:16px"><span style="font-family:微软雅黑">我们努力为用户的信息安全提供保障，以防止信息的丢失、不当使用、未经授权访问或披露。</span> </span>
+</p>
+<p style="text-indent:28px">
+    <span style=";font-family:微软雅黑;font-size:16px">我们将在合理的安全水平内使用各种安全保护措施以保障信息的安全。</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px"><span style="font-family:微软雅黑">我们通过不断提升的技术手段加强安装在您设备端的软件的安全能力，以防止您的个人信息泄露。例如，我们为了安全传输会在您设备本地完成部分信息加密的工作。</span> </span>
+</p>
+<p style="text-indent:28px">
+    <span style=";font-family:微软雅黑;font-size:16px"><span style="font-family:微软雅黑">我们建立专门的管理制度、流程和组织以保障信息的安全。例如，我们严格限制访问信息的人员范围，要求他们遵守保密义务，并进行审计。</span> </span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px"><span style="font-family:微软雅黑">若发生个人信息泄露等安全事件，我们会启动应急预案，阻止安全事件扩大，并以推送通知、公告等形式告知您。</span> </span>
+</p>
+<p>
+    <span style=";font-family:Calibri;font-size:14px">&nbsp;</span>
+</p>
+<p>
+    <strong><span style="font-family: Calibri;font-size: 16px"><span style="font-family:宋体">五、</span> <span style="font-family:宋体">您的权利</span></span></strong>
+</p>
+<p style="text-indent:28px">
+    <span style=";font-family:微软雅黑;font-size:16px">在您使用</span><span style=";font-family:微软雅黑;font-size:16px">聚微超</span><span style=";font-family:微软雅黑;font-size:16px">期间，我们设置了</span><span style=";font-family:微软雅黑;font-size:16px">意见建议反馈</span><span style=";font-family:微软雅黑;font-size:16px"><span style="font-family:微软雅黑">渠道，您的意见将会得到及时的处理。</span> </span>
+</p>
+<p>
+    <span style=";font-family:Calibri;font-size:14px">&nbsp;</span>
+</p>
+<p>
+    <strong><span style="font-family: Calibri;font-size: 16px"><span style="font-family:宋体">六、</span> <span style="font-family:宋体">我们如何处理未成年人的个人信息</span></span></strong>
+</p>
+<p style="text-indent:28px">
+    <span style=";font-family:微软雅黑;font-size:16px"><span style="font-family:微软雅黑">我们非常重视对未成年人个人信息的保护。根据相关法律法规的规定，若您是</span>18周岁以下的未成年人，在使用</span><span style=";font-family:微软雅黑;font-size:16px">聚微超</span><span style=";font-family:微软雅黑;font-size:16px">服务前，应事先取得您的家长或法定监护人的书面同意。若您是未成年人的监护人，当您对您所监护的未成年人的个人信息有相关疑问时，</span><span style=";font-family:微软雅黑;font-size:16px">请按</span><span style=";font-family:微软雅黑;font-size:16px"><span style="font-family:微软雅黑">本政策中提供的联系方式与我们联系。</span> </span>
+</p>
+<p>
+    <span style=";font-family:Calibri;font-size:14px">&nbsp;</span>
+</p>
+<p>
+    <strong><span style="font-family: Calibri;font-size: 16px"><span style="font-family:宋体">七、</span> <span style="font-family:宋体">您的个人信息如何在全球范围转移</span></span></strong>
+</p>
+<p style="text-indent:28px">
+    <span style=";font-family:微软雅黑;font-size:16px">我们会按照法律法规规定，将境内收集的用户个人信息存储于中国境内，以下情形除外：</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">1. 法律法规有明确规定；</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">2. 获得您的明确授权；</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">3. 您通过互联网进行跨境交易等个人主动行为。</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:16px">针对以上情形，我们会确保依据本隐私权政策对您的个人信息提供足够的保护。</span>
+</p>
+<p>
+    <span style=";font-family:Calibri;font-size:14px">&nbsp;</span>
+</p>
+<p>
+    <strong><span style="font-family: Calibri;font-size: 16px"><span style="font-family:宋体">八、</span> <span style="font-family:宋体">本政策如何更新</span></span></strong>
+</p>
+<p style="text-indent:28px">
+    <span style=";font-family:微软雅黑;font-size:16px">我们可能会适时对本指引进行修订。当指引的条款发生变更时，我们会在您登录及版本更新时以推送通知、弹窗的形式向您展示变更后的指引。请您注意，只有在您点击弹窗中的同意按钮后，我们才会按照更新后的指引收集、使用、存储您的个人信息。</span>
+</p>
+<p>
+    <strong><span style="font-family: Calibri;font-size: 16px"><span style="font-family:宋体">九、</span> <span style="font-family:宋体">如何联系我们</span></span></strong>
+</p>
+<p style="text-indent:28px">
+    <span style=";font-family:微软雅黑;font-size:16px">当您</span><span style=";font-family:微软雅黑;font-size:16px">出现</span><span style=";font-family:微软雅黑;font-size:16px">相关问题时，</span><span style=";font-family:微软雅黑;font-size:16px">可</span><span style=";font-family:微软雅黑;font-size:16px">通过客服电话：</span><span style=";font-family:微软雅黑;font-size:16px">xxxxxxxxx &nbsp;</span><span style=";font-family:微软雅黑;font-size:16px">与我们联系。</span>
+</p>
+<p>
+    <br/>
+</p>`
+  };
+
+  computed = {};
+
+  methods = {
+    onClick(e) {
+      console.log(e);
+    },
+    thumbTap(e) {
+      console.log(e);
+    }
+  };
+
+  events = {};
+
+  onLoad() {}
+}
+</script>
+
+<style lang="less">
+.media-btn {
+  padding-top: 10rpx;
+  text-align: center;
+  view {
+    flex-grow: 1;
+  }
+  view + view {
+    border-left: 1px solid #ddd;
+  }
+}
+</style>

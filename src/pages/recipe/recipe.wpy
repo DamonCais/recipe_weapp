@@ -1,0 +1,130 @@
+<template>
+  <view>
+    <view class="pv-20 bg-white">
+      <view class="fs-48">{{recipe.title}}</view>
+      <view>{{recipe.description}}</view>
+    </view>
+    <wux-cell-group title="材料">
+      <wux-cell wx:for="{{material}}" title="{{item.name}}" extra="{{item.quantity}}"></wux-cell>
+    </wux-cell-group>
+    <view class="p-20 c666">制作步骤：</view>
+    <view>
+      <myTabs :currentIndex.sync="currentIndex" :swiperList.sync="step"/>
+    </view>
+    <view style="margin-bottom:150rpx;">
+      <mySwiper
+        :currentIndex.sync="currentIndex"
+        :swiperList.sync="step"
+        @swiperChange.user="swiperChange"
+        swiperHeight="600rpx"
+      ></mySwiper>
+    </view>
+    <view class="flex footer">
+      <view class="flex-grow">
+        <button class="wux-balanced--bg fs-36" open-type="share">分享</button>
+      </view>
+      <view class="flex-grow">
+        <button class="wux-energized--bg fs-36">收藏</button>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+// button,icon,input,cell
+import wepy from 'wepy';
+import api from '@/api/api';
+import tip from '@/utils/tip';
+import { tabs } from '@/utils/tabs';
+import mySwiper from '@/components/swiper';
+import myTabs from '@/components/tabs';
+export default class recipe extends wepy.page {
+  config = {
+    navigationBarTitleText: '菜谱',
+    usingComponents: {
+      'jvc-media': '../../wux/jvc_media/index',
+      'wux-search-bar': '../../wux/search-bar/index',
+      'wux-tabs': '../../wux/tabs/index',
+      'wux-tab': '../../wux/tab/index',
+      'wux-badge': '../../wux/badge/index',
+      'wux-cell-group': '../../wux/cell-group/index',
+      'wux-cell': '../../wux/cell/index'
+    }
+  };
+  components = {
+    mySwiper: mySwiper,
+    myTabs: myTabs
+  };
+
+  data = {
+    recipeId: '',
+    recipe: {},
+    material: [],
+    step: [],
+    currentIndex: 0
+  };
+
+  computed = {};
+
+  methods = {
+    onConfirm() {},
+    onClear() {},
+    swiperChange(e) {
+      console.log(e);
+      // let { current } = e.detail;
+      // this.currentIndex = current;
+    },
+    onTabsChange(e) {
+      const { key } = e.detail;
+      this.currentIndex = 1 * key;
+    }
+  };
+
+  events = {};
+  onBottom;
+  onLoad({ id }) {
+    this.recipeId = id;
+    wepy.showShareMenu({ withShareTicket: true });
+    this.getRecipeById();
+  }
+  async getRecipeById() {
+    tip.loading();
+    let obj = {
+      id: this.recipeId
+    };
+    let res = await api.get(`/getRecipeById`, obj);
+    console.log(res.data);
+    this.recipe = res.data;
+    wepy.setNavigationBarTitle({ title: this.recipe.title });
+
+    this.material = this.recipe.data.Cookbook.material;
+    this.step = this.recipe.data.Cookbook.step;
+    this.$apply();
+    tip.loaded();
+  }
+  onTabChange() {}
+}
+</script>
+
+<style lang="less">
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+}
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  line-height: 100rpx;
+  text-align: center;
+  background: white;
+  button {
+    border: none;
+    border-radius: none;
+  }
+}
+</style>

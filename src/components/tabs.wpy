@@ -1,0 +1,136 @@
+<template>
+  <scroll-view scroll-into-view="{{ toView }}" scroll-x class="i-class i-tabs i-tabs-scroll">
+    <view
+      @tap="tapTab"
+      index="{{index}}"
+      wx:for="{{swiperList}}"
+      id="tab{{index}}"
+      class="i-class i-tabs-tab"
+    >
+      <view
+        class="ph-20 flex column align-center justify-center"
+        style="zoom:{{currentIndex==index?'1.3':'1'}};"
+      >
+        <!-- <image
+          src="{{item.img}}"
+          style="border-radius: 20rpx;width: 20px; height: 20px; margin-right: 5px;"
+        >-->
+        <text clss="fs-24">第{{item.stepNumber}}步</text>
+      </view>
+    </view>
+  </scroll-view>
+</template>
+<script>
+import wepy from 'wepy';
+
+export default class tabs extends wepy.component {
+  props = {
+    swiperList: {
+      type: Array
+    },
+
+    currentIndex: {
+      type: Number,
+      default: 0,
+      twoWay: true
+    }
+  };
+  computed = {
+    toView() {
+      if (this.currentIndex >= 3) {
+        return `tab${this.currentIndex - 2}`;
+      } else {
+        return `tab0`;
+      }
+    }
+  };
+  methods = {
+    tapTab(e) {
+      let { id } = e.currentTarget;
+      this.currentIndex = 1 * id.substr(3);
+    }
+  };
+}
+</script>
+
+<style lang="less">
+.i-tabs::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  transform: scale(0.5);
+  transform-origin: 0 0;
+  pointer-events: none;
+  box-sizing: border-box;
+  border: 0 solid #e9eaec;
+  border-bottom-width: 1px;
+}
+.i-tabs-scroll {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.i-tabs-tab {
+  flex: 1;
+  display: inline-block;
+  width: 150rpx;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  text-align: center;
+  position: relative;
+}
+.i-tabs-tab-title {
+  font-size: 14px;
+  text-align: center;
+  box-sizing: border-box;
+  color: #80848f;
+}
+.i-tabs-tab-title-current {
+  color: #2d8cf0;
+}
+.i-tabs-tab-scroll {
+  display: inline-block;
+  width: 90px;
+}
+.i-tabs {
+  display: flex;
+  // width: 100%;
+  height: 90rpx;
+  box-sizing: border-box;
+  position: relative;
+  justify-content: space-around;
+  align-items: center;
+  -webkit-box-align: center;
+  background: #fff;
+}
+.i-tabs::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  transform: scale(0.5);
+  transform-origin: 0 0;
+  pointer-events: none;
+  box-sizing: border-box;
+  border: 0 solid #e9eaec;
+  border-bottom-width: 1px;
+}
+.i-tabs-scroll {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.i-tabs-fixed {
+  position: fixed;
+  top: 0;
+  z-index: 2;
+}
+</style>

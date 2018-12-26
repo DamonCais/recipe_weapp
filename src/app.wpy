@@ -1,0 +1,75 @@
+<style lang="less">
+@import './styles/base';
+@import './styles/icon';
+@import './styles/style';
+@import './styles/flex';
+@import './styles/index.wxss';
+</style>
+
+
+<script>
+import wepy from 'wepy';
+import 'wepy-async-function';
+import api from '@/api/api';
+
+export default class extends wepy.app {
+  config = {
+    pages: [
+      'pages/recipe/index',
+      'pages/recipe/recipe',
+      'pages/calorie/index',
+      'pages/user/index'
+    ],
+    window: {
+      backgroundTextStyle: 'light',
+      navigationBarBackgroundColor: '#fff',
+      navigationBarTitleText: 'WeChat',
+      navigationBarTextStyle: 'black'
+    },
+    tabBar: {
+      color: '#999999',
+      selectedColor: '#ff6a3c',
+      backgroundColor: '#ffffff',
+      borderStyle: 'black',
+      list: [
+        {
+          pagePath: 'pages/recipe/index',
+          text: '首页',
+          iconPath: 'images/icon-home.png',
+          selectedIconPath: 'images/icon-home-active.png'
+        },
+
+        {
+          pagePath: 'pages/calorie/index',
+          text: '热量',
+          iconPath: 'images/code.png',
+          selectedIconPath: 'images/code-active.png'
+        },
+
+        {
+          pagePath: 'pages/user/index',
+          text: '我的',
+          iconPath: 'images/huiyuan.png',
+          selectedIconPath: 'images/huiyuan-active.png'
+        }
+      ]
+    }
+  };
+
+  globalData = {
+    userInfo: null,
+    userSpecialInfo: null,
+    location: null,
+    encryptedOBJ: null,
+    loginObj: null
+  };
+
+  constructor() {
+    super();
+    this.use('requestfix');
+    this.use('promisify');
+  }
+
+  onLaunch() {}
+}
+</script>

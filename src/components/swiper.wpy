@@ -1,0 +1,113 @@
+<template>
+  <view>
+    <swiper
+      indicator-dots="{{indicatorDots}}"
+      autoplay="{{autoplay}}"
+      interval="{{interval}}"
+      duration="{{duration}}"
+      circular="{{circular}}"
+      current="{{ currentIndex }}"
+      previous-margin="100rpx"
+      next-margin="100rpx"
+      @change="swiperChange"
+      class="swiper"
+      style="height:{{swiperHeight}};"
+    >
+      <view wx:for="{{swiperList}}" wx:for-index="index">
+        <swiper-item>
+          <view class="item-wrapper" style="padding:{{ currentIndex===index?'20rpx':'40rpx'}}">
+            <view class="item-border bg-white flex column">
+              <image src="{{item.image.contentUrl}}" class="slide-image">
+              <view class="p-20 flex column justify-space-between flex-grow">
+                <view class="flex justify-flex-start fs-48">
+                  <text class="c000">第{{item.stepNumber}}步</text>
+                  <!-- <text class="c333"></text> -->
+                </view>
+                <view class="c666 fs-24">{{item.description}}</view>
+              </view>
+            </view>
+          </view>
+        </swiper-item>
+      </view>
+    </swiper>
+  </view>
+</template>
+<script>
+import wepy from 'wepy';
+
+export default class swiper extends wepy.component {
+  props = {
+    autoplay: {
+      type: Boolean,
+      default: false
+    },
+    interval: {
+      type: Number,
+      default: 5000
+    },
+    duration: {
+      type: Number,
+      default: 900
+    },
+    circular: {
+      type: Boolean,
+      default: false
+    },
+    indicatorDots: {
+      type: Boolean,
+      default: false
+    },
+    swiperHeight: {
+      type: String,
+      default: '900rpx'
+    },
+    swiperList: {
+      type: Array
+    },
+    currentIndex: {
+      type: Number,
+      default: 0,
+      twoWay: true
+    }
+  };
+  methods = {
+    tapThumb() {
+      this.$emit('tapThumb');
+    }
+  };
+  computed = {};
+  data = {};
+  methods = {
+    swiperChange(e) {
+      let { current } = e.detail;
+      this.currentIndex = current;
+      this.$emit('swiperChange', current);
+    }
+  };
+}
+</script>
+
+<style lang="less">
+.swiper {
+  // height: 800rpx;
+}
+.item-wrapper {
+  box-sizing: border-box;
+  height: 100%;
+  transition: all 0.4s ease;
+  display: flex;
+  flex-direction: column;
+
+  .item-border {
+    border: 1px solid #ddd;
+    border-radius: 20rpx;
+    height: 100%;
+  }
+  image {
+    width: 100%;
+    height: 300rpx;
+    border-top-right-radius: 20rpx;
+    border-top-left-radius: 20rpx;
+  }
+}
+</style>

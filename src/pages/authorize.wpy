@@ -1,0 +1,387 @@
+<template>
+  <view style="height:100%;" class="header flex column justify-space-between">
+    <view class="bg-cover">
+      <swiper
+        autoplay="false"
+        current="{{ currentIndex }}"
+        @change="swiperChange"
+        class="swiper"
+        circular
+      >
+        <block wx:for="{{swiperList}}" key="item" item="item" wx:key="key">
+          <swiper-item>
+            <image src="{{item.img}}" data-src="{{item.img}}" class="swiper-image">
+          </swiper-item>
+        </block>
+      </swiper>
+    </view>
+    <!-- 轮播 -->
+    <view class="">
+      <view class="flex align-center justify-center mb-40">
+        <image
+          class="radio-circle"
+          style="width:100rpx;height:100rpx; "
+          src="http://mp.jycais.cn/uploadDir/upload_e8a40217607982e65ad8f04e82dc8b5c.jpg"
+        >
+        <!-- <text class="pl-20 fs-48">聚微超</text> -->
+      </view>
+      <swiper
+        autoplay="true"
+        interval="5000"
+        duration="500"
+        current="{{ currentIndex }}"
+        @change="swiperChange"
+        circular
+        class="swiper"
+      >
+        <block wx:for="{{swiperList}}" key="item" item="item" wx:key="key">
+          <swiper-item>
+            <image src="{{item.img}}" data-src="{{item.img}}" mode="widthFix" style="width:100%;">
+          </swiper-item>
+        </block>
+      </swiper>
+    </view>
+    <view wx:if="{{!userInfo}}">
+      <view class="p-20 text-center">申请获取以下权限：</view>
+      <view class="p-20 text-center">获取你的公开信息（头像、昵称等）</view>
+      <!-- <view class="flex justify-center align-center ph-20">
+        <view style="display:inline-block">
+          <checkbox-group @change="onCheckboxChange">
+            <checkbox checked="{{isAgree}}"></checkbox>我同意
+            <text
+              @tap="confirm"
+              style="color:green;text-decoration:underline;line-height:23px;"
+            >服务协议</text>
+          </checkbox-group>
+        </view>
+      </view> -->
+      <jvc-button open-type="getUserInfo" type="success" block bindgetuserinfo="onGotUserInfo">授权</jvc-button>
+    </view>
+    <view wx:if="{{userInfo&&!userSpecialInfo.IsMember}}">
+      <wux-cell>
+        <wux-input
+          data-key="mobile"
+          value="{{form.mobile}}"
+          @change="onChange"
+          controlled
+          label="手机号"
+        ></wux-input>
+      </wux-cell>
+      <wux-cell>
+        <wux-input
+          data-key="vsCode"
+          @change="onChange"
+          controlled
+          value="{{form.vsCode}}"
+          label="验证码"
+        >
+          <view slot="footer">
+            <jvc-button
+              size="small"
+              @tap="tapSms"
+              wx:if="{{!countSec}}"
+              type="success"
+            >{{vsCodeBtn}}</jvc-button>
+            <jvc-button size="small" wx:if="{{countSec}}" clear="" type="success">{{countSec}}</jvc-button>
+          </view>
+        </wux-input>
+      </wux-cell>
+      <view class="flex justify-center align-center ph-20">
+        <view style="display:inline-block">
+          <checkbox-group @change="onCheckboxChange">
+            <checkbox checked="{{isAgree}}"></checkbox>我同意
+            <text
+              @tap="confirm"
+              style="color:green;text-decoration:underline;line-height:23px;"
+            >服务协议</text>
+          </checkbox-group>
+        </view>
+      </view>
+      <jvc-button loading="{{loading}}" @tap="tapBindMobile" type="success">绑定手机</jvc-button>
+    </view>
+    <wux-popup closable bind:close="onPravicyPopClose" visible="{{ pravicyPop }}" title="聚微超用户协议">
+      <view class="scrollable only-y text-left" style="height:800rpx;">
+        <rich-text nodes="{{richText}}"></rich-text>
+
+      </view>
+        <view slot="footer" style="padding-left:40rpx;">
+          <checkbox-group @change="onCheckboxChange">
+            <checkbox checked="{{isAgree}}">我已阅读并同意服务协议</checkbox>
+          </checkbox-group>
+        </view>
+    </wux-popup>
+  </view>
+</template>
+<script>
+import wepy from 'wepy';
+import tip from '@/utils/tip';
+import { $wuxCountDown } from '../wux/index';
+import api from '@/api/api';
+import _ from '@/utils/lodash';
+import { SYSTEM_INFO, OPENID, USER_INFO } from '@/utils/constant';
+import { PRAVICY } from '@/utils/pravicy';
+export default class Authorize extends wepy.page {
+  config = {
+    navigationBarTitleText: '登录',
+    usingComponents: {
+      'wux-popup': '../../wux/popup/index',
+
+      'wux-cell-group': '../wux/cell-group/index',
+      'wux-button': '../wux/button/index',
+      'wux-tag': '../wux/tag/index',
+      'wux-cell': '../wux/cell/index',
+      'wux-input': '../wux/input/index',
+      'wux-selectable': '../wux/selectable/index',
+      'wux-dialog': '../wux/dialog/index',
+      'jvc-button': '../iview/jvc_button/index',
+      'i-input': '../iview/input/index'
+    }
+  };
+  data = {
+    richText: PRAVICY,
+    pravicyPop: false,
+    show: false,
+    countDown: '',
+    countSec: '',
+    currentIndex: 0,
+    vsCodeBtn: '获取验证码',
+    userInfo: null,
+    userSpecialInfo: null,
+    isAgree: false,
+    form: {
+      mobile: '',
+      PassWord: '',
+      vsCode: ''
+    },
+    vsCode: '',
+    loading: false,
+    swiperList: [
+      {
+        img:
+          'http://mp.jycais.cn/uploadDir/upload_bce09ab13aedca80a621802253a77624.jpg'
+      },
+      {
+        img:
+          'http://mp.jycais.cn/uploadDir/upload_1fdbc2423b4d9db68bf66eb91cae43b5.jpg'
+      },
+
+      {
+        img:
+          'http://mp.jycais.cn/uploadDir/upload_b4630d9dd1cb2e6d7e54d2e45dbaac53.jpg'
+      }
+    ]
+  };
+  async onLoad(option) {
+    console.log(option);
+    const updateManager = wx.getUpdateManager();
+    updateManager.onCheckForUpdate(function(res) {
+      // 请求完新版本信息的回调
+      console.log(res.hasUpdate);
+    });
+
+    updateManager.onUpdateReady(function() {
+      wx.showModal({
+        title: '更新提示',
+        content: '新版本已经准备好，是否重启应用？',
+        success(res) {
+          if (res.confirm) {
+            // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+            updateManager.applyUpdate();
+          }
+        }
+      });
+    });
+
+    updateManager.onUpdateFailed(function() {
+      // 新版本下载失败
+    });
+    tip.loading();
+    try {
+          await this.$parent.login();
+    await this.$parent.getUserInfo();
+    this.userInfo = this.$parent.userInfo;
+    this.userSpecialInfo = this.$parent.userSpecialInfo;
+    if (_.get(this.userSpecialInfo, 'IsMember')) {
+      wepy.switchTab({ url: '/pages/home/index' });
+    }
+    this.$apply();
+    } catch (error) {
+      
+    }
+    tip.loaded();
+
+  }
+
+  async onGotUserInfo(e) {
+    tip.loading();
+    try {
+      if (e.detail.errMsg == 'getUserInfo:ok') {
+        await this.$parent.onGotUserInfo(e);
+        this.userInfo = this.$parent.userInfo;
+        this.userSpecialInfo = this.$parent.userSpecialInfo;
+        if (_.get(this.userSpecialInfo, 'IsMember')) {
+          wepy.switchTab({ url: '/pages/home/index' });
+        }
+        this.$apply();
+      }
+    } catch (error) {
+      console.log(error);
+      tip.error(error);
+    }
+
+    tip.loaded();
+  }
+
+  // 发送验证码
+  async tapSms() {
+    try {
+      await this.mobileCheck();
+      let obj = { mobile: this.form.mobile };
+      let res = await api.get(`/sys/SendSms`, obj);
+      this.vsCode = res.data.entity;
+      // this.form.vsCode = res.data.entity;
+      this.$apply();
+      if (this.countDown && this.countDown.interval) return !1;
+      let that = this;
+      this.countDown = new $wuxCountDown({
+        date: +new Date() + 60000,
+        onEnd() {
+          that.countSec = '';
+          that.vsCodeBtn = '重新获取验证码';
+          that.$apply();
+        },
+        render(date) {
+          const sec = this.leadingZeros(date.sec, 2) + ' 秒 ';
+          if (date.sec !== 0) {
+            that.countSec = date.sec;
+            that.$apply();
+          }
+        }
+      });
+    } catch (error) {}
+  }
+  // 绑定手机号
+  async tapBindMobile() {
+    try {
+      this.loading = true;
+      await this.validateAll();
+      if (!this.isAgree) {
+        this.confirm();
+        return;
+      }
+      let obj = {
+        UserCode: this.userSpecialInfo.user_Infor.UserCode,
+        PassWord: '123456',
+        Mobile: this.form.mobile
+      };
+      let res = await api.get(`/MB/BindMobile`, obj);
+      if (res.data.status) {
+        tip.success(res.data.msg);
+        wepy.switchTab({
+          url: '/pages/home/index'
+        });
+      } else {
+        tip.error(res.data.msg);
+      }
+    } catch (error) {
+      tip.error(error);
+    }
+    this.loading = false;
+  }
+  // 手机号正则
+  mobileCheck() {
+    return new Promise((resolve, reject) => {
+      if (!/^1\d{10}$/.test(this.form.mobile)) {
+        reject('请输入手机号!');
+      }
+      resolve();
+    });
+  }
+  // 输入校验
+  async validateAll() {
+    try {
+      await this.mobileCheck();
+      if (this.vsCode !== this.form.vsCode) {
+        return Promise.reject('验证码输入错误');
+      }
+      return Promise.resolve();
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+  // 用户协议内容
+  async confirm() {
+    // wepy.navigateTo({ url: '/pages/pravicy' });
+    this.pravicyPop = true;
+    // let res = await tip.confirm('用户服务协议内容', {}, '用户协议');
+    // console.log(res);
+    // this.isAgree = true;
+    // this.$apply();
+  }
+  events = {};
+  methods = {
+    onPravicyPopClose(){
+      this.pravicyPop = false;
+    },
+    onCheckboxChange(e) {
+      this.pravicyPop = false;
+      this.isAgree = Boolean(e.detail.value.length);
+    },
+    onChange(e) {
+      let { key } = e.currentTarget.dataset;
+      this.form[key] = e.detail.value;
+    },
+    swiperChange(e) {
+      let { current } = e.detail;
+      this.currentIndex = current;
+    }
+  };
+}
+</script>
+<style lang="less">
+page {
+  height: 100%;
+}
+.header {
+  padding: 80rpx 40rpx 200rpx;
+}
+.swiper {
+  height: 400rpx;
+}
+.bg-cover {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -2;
+  opacity: 0.6;
+  .swiper {
+    height: 100%;
+    .swiper-image {
+      filter: blur(10px);
+      height: 100%;
+      width: 100%;
+    }
+  }
+}
+.authorize-contianer {
+  height: 100%;
+  background: #fff;
+  text-align: center;
+  padding-top: 100rpx;
+  .authorize-icon {
+    width: 128rpx;
+    height: 128rpx;
+    display: block;
+    margin: 0 auto;
+    padding-bottom: 10rpx;
+  }
+  .auth-item {
+    padding: 5rpx 0;
+  }
+  .btn-authorize {
+    margin: 100rpx 50rpx;
+  }
+}
+</style>

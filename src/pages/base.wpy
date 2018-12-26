@@ -1,0 +1,111 @@
+<template>
+  <view class="p-20">
+    <!-- Button -->
+    <view class="flex p-20">
+      <jvc-button
+        class="flex-grow"
+        shape="circle"
+        loading="{{false}}"
+        @click="onClick"
+        type="success"
+      >a</jvc-button>
+    </view>
+    <!--列表Card -->
+    <jvc-media
+      @thumbTap="thumbTap"
+      data-id="{{item.id}}"
+      thumb="http://mp.jycais.cn/uploadDir/upload_e8a40217607982e65ad8f04e82dc8b5c.jpg"
+      thumb-style="border-radius: 30rpx"
+      title="{{item.name}}"
+      label="{{item.label}}"
+      address="{{item.address}}"
+      distance="{{item.distanceText}}"
+    >
+      <view class="flex justify-space-between lh-60 border-top media-btn">
+        <view class="wux-balanced">换电(6)</view>
+        <view class="cddd">租车(无)</view>
+        <view class="cddd">加盟(无)</view>
+        <view class="cddd">购物(无)</view>
+      </view>
+    </jvc-media>
+    <!-- 顶部card -->
+    <jvc-media-b
+      thumb="http://mp.jycais.cn/uploadDir/upload_e8a40217607982e65ad8f04e82dc8b5c.jpg"
+      thumbStyle="border-radius: 50%"
+    >
+      <view style="height:100%;" class="flex justify-space-between align-center pv-20">
+        <view class="c333">name
+          <wux-tag @tap.stop="tapVipInfo" class="pl-20" color="green">普通会员</wux-tag>
+        </view>
+        <view @tap.stop="tapVipInfo" class="666 fs-24">会员权益</view>
+      </view>
+    </jvc-media-b>
+    <!-- 自定义icon -->
+    <view class="p-20">
+      <jvc-icon color="blue" type="alipay"></jvc-icon>
+      <jvc-icon type="Dollar"></jvc-icon>
+    </view>
+  </view>
+</template>
+
+<script>
+// button,icon,input,cell
+import wepy from 'wepy';
+export default class base extends wepy.page {
+  config = {
+    navigationBarTitleText: 'test',
+    usingComponents: {
+      'jvc-button': '../iview/jvc_button/index',
+      'jvc-icon': '../iview/jvc_icon/index',
+      'jvc-media': '../wux/jvc_media/index',
+      'jvc-media-b': '../wux/jvc_media_b/index',
+      'wux-tag': '../wux/tag/index',
+
+      'i-input': '../../iview/input/index',
+      'i-cell-group': '../../iview/cell-group/index',
+      'i-cell': '../../iview/cell/index',
+      'i-panel': '../../iview/panel/index',
+      'i-load-more': '../../iview/load-more/index'
+    }
+  };
+  components = {};
+
+  data = {
+    item: {
+      name: '1号营业点',
+      label: '48V充电柜',
+      address: '沃尔玛停车场',
+      id: 1,
+      distanceText: '700m'
+    }
+  };
+
+  computed = {};
+
+  methods = {
+    onClick(e) {
+      console.log(e);
+    },
+    thumbTap(e) {
+      console.log(e);
+    }
+  };
+
+  events = {};
+
+  onLoad() {}
+}
+</script>
+
+<style lang="less">
+.media-btn {
+  padding-top: 10rpx;
+  text-align: center;
+  view {
+    flex-grow: 1;
+  }
+  view + view {
+    border-left: 1px solid #ddd;
+  }
+}
+</style>

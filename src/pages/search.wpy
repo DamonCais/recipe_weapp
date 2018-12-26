@@ -1,0 +1,48 @@
+<template>
+  <view>
+    <wux-search-bar clear="" show-cancel value="{{ keyWord }}" controlled placeholder="Search"/>
+    <wux-cell-group @tap="tapKeyWord">
+      <wux-cell data-id="1" title="关键词1"></wux-cell>
+      <wux-cell data-id="2" title="关键词2"></wux-cell>
+    </wux-cell-group>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+export default class search extends wepy.page {
+  config = {
+    navigationBarTitleText: 'search',
+    usingComponents: {
+      'wux-button': '../wux/button/index',
+      'wux-cell': '../wux/cell/index',
+      'wux-cell-group': '../wux/cell-group/index',
+
+      'wux-search-bar': '../wux/search-bar/index'
+    }
+  };
+  components = {};
+
+  data = {
+    keyWord: ''
+  };
+
+  computed = {};
+
+  methods = {
+    tapSearchBar(e) {},
+    tapKeyWord(e) {
+      console.log(e);
+      this.keyWord = `关键词` + e.target.dataset.id;
+      this.$apply();
+    }
+  };
+
+  events = {};
+
+  onLoad() {}
+}
+</script>
+
+<style>
+</style>

@@ -1,0 +1,35 @@
+<template>
+  <view class="p-20">user</view>
+</template>
+
+<script>
+// button,icon,input,cell
+import wepy from 'wepy';
+export default class base extends wepy.page {
+  config = {
+    navigationBarTitleText: 'test',
+    usingComponents: {}
+  };
+  components = {};
+
+  data = {};
+
+  computed = {};
+
+  methods = {
+    onClick(e) {
+      console.log(e);
+    },
+    thumbTap(e) {
+      console.log(e);
+    }
+  };
+
+  events = {};
+
+  onLoad() {}
+}
+</script>
+
+<style lang="less">
+</style>

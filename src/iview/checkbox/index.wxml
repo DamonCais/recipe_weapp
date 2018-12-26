@@ -1,0 +1,11 @@
+<view class="i-class i-checkbox" catchtap="checkboxChange">
+    <view class="i-cell-icon">
+        <slot name="icon"></slot>
+    </view>
+    <i-cell i-class="i-checkbox-cell">
+        <label>
+            <radio value="{{value}}" checked="{{checked}}" color="{{checked?color:''}}" disabled="{{disabled}}" class="i-checkbox-radio {{positionCls}}" />
+            <view class="i-checkbox-title">{{value}}</view>
+        </label>
+    </i-cell>
+</view>

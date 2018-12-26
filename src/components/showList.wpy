@@ -1,0 +1,20 @@
+
+<template>
+  <i-cell-group>
+    <block wx:for="{{form}}" wx:for-index="key">
+      <i-cell title="{{item.label}}" value="{{item.value}}"></i-cell>
+    </block>
+  </i-cell-group>
+</template>
+<script>
+import wepy from 'wepy';
+
+export default class showList extends wepy.component {
+  props = {
+    form: {
+      type: Object
+    }
+  };
+  methods = {};
+}
+</script>
