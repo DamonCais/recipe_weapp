@@ -6,12 +6,30 @@ const easeInOutCubic = (a, b, c, d) => {
     a -= 2
     return c / 2 * (a * a * a + 2) + b
 }
-
+const toPercents = (arr) => {
+    let sum = 0;
+    let array = [];
+    arr.forEach(element => {
+        sum += element;
+    });
+    let sum2 = 0;
+    for (let i = 0; i < arr.length; i++) {
+        sum2 += arr[i];
+        array.push(sum2 / sum * 100);
+    }
+    return array;
+}
 Component({
     externalClasses: ['wux-class'],
     properties: {
-        percents: {
+        values: {
             type: Array,
+            value: [],
+            observer(newVal) {
+                this.setData({
+                    percents: toPercents(newVal),
+                })
+            },
         },
         percent: {
             type: Number,
@@ -66,11 +84,12 @@ Component({
         },
     },
     data: {
+        percents: [],
         beginAngle: 0,
         startAngle: 0,
         endAngle: 0,
         currentAngle: 0,
-        colors: ['red', 'blue', 'orange', 'yellow', 'green'],
+        colors: ['#11c1f3', '#ef473a', '#ffc900', '#886aea', '#33cd5f'],
     },
     methods: {
         /**
@@ -117,13 +136,13 @@ Component({
             this.ctx.clearRect(0, 0, size, size)
 
             // 绘制背景
-            if (background) {
-                this.ctx.beginPath()
-                this.ctx.arc(position, position, radius, 0, 2 * Math.PI)
-                this.ctx.setLineWidth(strokeWidth)
-                this.ctx.setStrokeStyle(backgroundColor)
-                this.ctx.stroke()
-            }
+            // if (background) {
+            //     this.ctx.beginPath()
+            //     this.ctx.arc(position, position, radius, 0, 2 * Math.PI)
+            //     this.ctx.setLineWidth(strokeWidth)
+            //     this.ctx.setStrokeStyle(backgroundColor)
+            //     this.ctx.stroke()
+            // }
 
             // 绘制进度
             // if (line) {
@@ -136,14 +155,19 @@ Component({
             // }
 
             for (let i = 0; i < percents.length; i++) {
-                let _startAngle = i == 0 ? 0 : percent(percents[i - 1].percent);
-                let _endAngle = percent(percents[i].percent) > endAngle ? endAngle : percent(percents[i].percent);
+                let _startAngle = i == 0 ? 0 : percent(percents[i - 1]);
+                let _endAngle = percent(percents[i]) > endAngle ? endAngle : percent(percents[i]);
                 this.ctx.beginPath();
+                this.ctx.moveTo(position, position);
+
                 this.ctx.arc(position, position, radius, _startAngle, _endAngle);
-                this.ctx.setStrokeStyle(this.data.colors[i]);
+                this.ctx.fillStyle = this.data.colors[i];
+                // this.ctx.setStrokeStyle(this.data.colors[i]);
+                this.ctx.closePath();
+                this.ctx.fill();
                 // this.ctx.setLineCap(lineCap)
-                this.ctx.stroke()
-                if (percent(percents[i].percent) > endAngle) {
+                // this.ctx.stroke()
+                if (percent(percents[i]) > endAngle) {
                     break;
                 }
             }

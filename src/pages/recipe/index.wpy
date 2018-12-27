@@ -1,29 +1,12 @@
 <template>
   <view>
-    <view style="margin-top:70px;" class="p-20">
+    <view style="margin-top:90px;" class="p-20">
       <block wx:for="{{recipe}}" wx:key>
-        <jvc-media
-          @Tap="Tap"
-          data-id="{{item.id}}"
-          thumb="{{item.cover}}"
-          thumb-style="border-radius: 30rpx"
-          title="{{item.title}}"
-          label="{{item.mainingredient}}"
-          username="{{item.username}}"
-          dateline="{{item.dateline}}"
-        ></jvc-media>
+        <jvc-media @Tap="Tap" data-id="{{item.id}}" thumb="{{item.cover}}" thumb-style="border-radius: 30rpx" title="{{item.title}}" label="{{item.mainingredient}}" username="{{item.username}}" dateline="{{item.dateline}}"></jvc-media>
       </block>
     </view>
     <view class="header">
-      <wux-search-bar
-        clear=""
-        show-cancel
-        value="{{ keyWord }}"
-        controlled
-        placeholder="Search"
-        bind:confirm="onConfirm"
-        bind:clear="onClear"
-      />
+      <wux-search-bar clear="" show-cancel value="{{ keyWord }}" controlled placeholder="Search" bind:confirm="onConfirm" bind:clear="onClear" />
       <wux-tabs scroll controlled current="{{ currentTab }}" bindchange="onTabChange">
         <block wx:for="{{tabs}}" wx:key>
           <wux-tab key="tab{{index}}" title="{{item.text}}"></wux-tab>
@@ -69,7 +52,13 @@ export default class recipe extends wepy.page {
   computed = {};
 
   methods = {
-    onConfirm() {},
+    onConfirm(e) {
+      console.log(e);
+      this.recipe = [];
+      this.keyWord = e.detail.value;
+      this.filter.page = 1;
+      this.getRecipeByKewWord();
+    },
     onClear() {},
     onTabChange(e) {
       console.log(e);
@@ -95,13 +84,27 @@ export default class recipe extends wepy.page {
   onReachBottom() {
     console.log('touchBottom');
     this.filter.page++;
-    this.getRecipe();
+    if (this.keyWord) {
+      this.getRecipeByKewWord();
+    } else {
+      this.getRecipe();
+    }
   }
   async getRecipe() {
     tip.loading();
     let res = await api.get(`/getMoreDiffStateRecipeList`, this.filter);
     console.log(res.data);
     this.recipe = this.recipe.concat(res.data.data);
+    this.$apply();
+    tip.loaded();
+  }
+  async getRecipeByKewWord() {
+    tip.loading();
+    let res = await api.get(`/getRecipeByKewWord`, {
+      keyWord: this.keyWord,
+      page: this.filter.page
+    });
+    this.recipe = this.recipe.concat(res.data);
     this.$apply();
     tip.loaded();
   }

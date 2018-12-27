@@ -1,0 +1,138 @@
+<template>
+
+  <view>
+    <view style="padding:20rpx 20rpx 0;">
+      <jvc-media thumb="{{calorie.image}}" thumb-style="border-radius: 30rpx" title="{{calorie.cont_h3}}" label="分类:{{calorie.type}}" username="减肥人群:{{calorie.suggest}}">
+        <view class="flex column">
+          <wux-grids bordered="{{false}}" col="4">
+            <wux-grid wx:for="{{calorie.baseBox}}">
+              <view class="wux-assertive">{{item}}</view>
+
+              <view class="fs-24">{{tabs[index]}}</view>
+            </wux-grid>
+          </wux-grids>
+          <view class="text-indent fs-24 pb-20">
+            {{calorie.tips}}
+          </view>
+        </view>
+
+      </jvc-media>
+    </view>
+
+    <wux-cell-group title="热量分解">
+
+      <view class="p-20 flex justify-center">
+        <!-- '#11c1f3', '#ef473a', '#ffc900',  -->
+        <jvc-circle size="120" values="{{values}}" percent="100" color="#33cd5f"></jvc-circle>
+        <view class="p-20 flex column justify-space-around">
+          <view class="flex align-center" wx:for="{{values2}}">
+            <wux-icon class="pr-20" color="{{colors[index]}}" type="ios-radio-button-on" />
+            {{tabs[index+1]}}:{{item}}%</view>
+
+        </view>
+      </view>
+
+    </wux-cell-group>
+
+    <wux-cell-group title="食用分量">
+      <wux-cell wx:for="{{calorie.unit}}" title="{{item.heat}}" extra="{{item.unit}}"></wux-cell>
+    </wux-cell-group>
+    <wux-cell-group title="营养信息">
+      <wux-cell wx:for="{{calorie.unrt}}" title="{{item.name}}" extra="{{item.count}}"></wux-cell>
+    </wux-cell-group>
+  </view>
+</template>
+
+<script>
+// button,icon,input,cell
+import api from '@/api/api';
+import tip from '@/utils/tip';
+import wepy from 'wepy';
+export default class base extends wepy.page {
+  config = {
+    navigationBarTitleText: 'calorie',
+    usingComponents: {
+      'jvc-circle': '../../wux/jvc_circle/index',
+
+      'wux-cell-group': '../../wux/cell-group/index',
+      'wux-cell': '../../wux/cell/index',
+      'wux-icon': '../../wux/icon/index',
+      'wux-grids': '../../wux/grids/index',
+      'wux-grid': '../../wux/grid/index',
+      'jvc-media': '../../wux/jvc_media/index'
+    }
+  };
+  components = {};
+
+  data = {
+    tabs: ['热量', '蛋白质', '碳水化合物', '脂肪'],
+    values: [],
+    values2: [],
+    colors: ['#11c1f3', '#ef473a', '#ffc900'],
+    sum: 100,
+    calorie: null
+  };
+
+  computed = {};
+
+  methods = {
+    onClick(e) {
+      console.log(e);
+    },
+    thumbTap(e) {
+      console.log(e);
+    }
+  };
+
+  events = {};
+
+  onLoad({ detail }) {
+    this.calorieDetail = detail;
+    this.getCalorieDetail();
+  }
+  async getCalorieDetail() {
+    tip.loading();
+    let obj = {
+      detail: this.calorieDetail
+    };
+    let res = await api.get(`/getCalorieDetail`, obj);
+    console.log(res.data);
+    this.calorie = res.data;
+    let { baseBox } = res.data;
+    let arr = [];
+    let arr2 = [];
+    let sum = 0;
+    baseBox.slice(1).forEach(element => {
+      sum += Number(element.replace('g', ''));
+      arr.push(Number(element.replace('g', '')));
+    });
+    if (sum) {
+      baseBox.slice(1).forEach(element => {
+        let num = Number(element.replace('g', ''));
+        arr2.push(((num / sum) * 100).toFixed(2));
+      });
+      this.sum = sum;
+      this.values = arr;
+      this.values2 = arr2;
+    }
+
+    let { cont_h3 } = res.data;
+    wepy.setNavigationBarTitle({ title: cont_h3.split(' ')[0] });
+    this.$apply();
+    tip.loaded();
+  }
+}
+</script>
+
+<style lang="less">
+.media-btn {
+  padding-top: 10rpx;
+  text-align: center;
+  view {
+    flex-grow: 1;
+  }
+  view + view {
+    border-left: 1px solid #ddd;
+  }
+}
+</style>

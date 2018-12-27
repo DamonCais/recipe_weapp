@@ -16,8 +16,11 @@ export default class extends wepy.app {
   config = {
     pages: [
       'pages/recipe/index',
-      'pages/recipe/recipe',
+
       'pages/calorie/index',
+
+      'pages/recipe/recipe',
+      'pages/calorie/calorie',
       'pages/user/index'
     ],
     window: {

@@ -9,15 +9,10 @@
     </wux-cell-group>
     <view class="p-20 c666">制作步骤：</view>
     <view>
-      <myTabs :currentIndex.sync="currentIndex" :swiperList.sync="step"/>
+      <myTabs :currentIndex.sync="currentIndex" :swiperList.sync="step" />
     </view>
     <view style="margin-bottom:150rpx;">
-      <mySwiper
-        :currentIndex.sync="currentIndex"
-        :swiperList.sync="step"
-        @swiperChange.user="swiperChange"
-        swiperHeight="600rpx"
-      ></mySwiper>
+      <mySwiper :currentIndex.sync="currentIndex" :swiperList.sync="step" @swiperChange.user="swiperChange" swiperHeight="600rpx"></mySwiper>
     </view>
     <view class="flex footer">
       <view class="flex-grow">
@@ -123,7 +118,7 @@ export default class recipe extends wepy.page {
   text-align: center;
   background: white;
   button {
-    border: none;
+    border: 0;
     border-radius: none;
   }
 }
