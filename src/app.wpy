@@ -17,11 +17,14 @@ export default class extends wepy.app {
     pages: [
       'pages/recipe/index',
 
+      'pages/user/index',
+      'pages/user/about',
+
       'pages/calorie/index',
 
       'pages/recipe/recipe',
       'pages/calorie/calorie',
-      'pages/user/index'
+      'pages/user/recipe'
     ],
     window: {
       backgroundTextStyle: 'light',

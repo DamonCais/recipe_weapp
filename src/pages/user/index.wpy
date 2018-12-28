@@ -1,5 +1,27 @@
 <template>
-  <view class="p-20">user</view>
+  <view>
+    <view class="wux-energized--bg p-20 header">
+      <button open-type="getUserInfo" bindgetuserinfo="onGotUserInfo">
+        <view>
+          <image src="{{avatarUrl}}" />
+          <view>{{userInfo.nickName||'点击授权'}}</view>
+        </view>
+      </button>
+    </view>
+    <wux-cell-group>
+      <wux-cell title="我的食谱" @tap="tapRecipe" is-link>
+        <wux-icon slot="header" size="30" class="mr-20" type="ios-list"/>
+      </wux-cell>
+      <wux-cell title="关于" @tap="tapAbout" is-link>
+        <wux-icon slot="header" size="30" class="mr-20" type="ios-info"/>
+      </wux-cell>
+    </wux-cell-group>
+    <view class="p-20">
+      <navigator target="miniProgram" open-type="exit" version="release">
+        <jvc-button shape="circle" loading="{{false}}" type="error">退出登录</jvc-button>
+      </navigator>
+    </view>
+  </view>
 </template>
 
 <script>
@@ -8,11 +30,20 @@ import wepy from 'wepy';
 export default class base extends wepy.page {
   config = {
     navigationBarTitleText: 'test',
-    usingComponents: {}
+    usingComponents: {
+      'jvc-button': '../../iview/jvc_button/index',
+
+      'wux-cell-group': '../../wux/cell-group/index',
+      'wux-cell': '../../wux/cell/index'
+    }
   };
   components = {};
 
-  data = {};
+  data = {
+    userInfo: {},
+    avatarUrl:
+      'http://mp.jycais.cn/uploadDir/upload_189f15d5f63b54131ed2fd7b1dbc01ef.jpg'
+  };
 
   computed = {};
 
@@ -20,16 +51,41 @@ export default class base extends wepy.page {
     onClick(e) {
       console.log(e);
     },
-    thumbTap(e) {
-      console.log(e);
-    }
+    tapRecipe(e) {
+      wepy.navigateTo({ url: '/pages/user/recipe' });
+      
+},
+    tapAbout(e) {
+      wepy.navigateTo({ url: '/pages/user/about' });
+      
+}
   };
 
   events = {};
 
   onLoad() {}
+  async onGotUserInfo(e) {
+    console.log(e);
+    this.userInfo = e.detail.userInfo;
+    this.avatarUrl = this.userInfo.avatarUrl;
+    this.$apply();
+  }
 }
 </script>
 
 <style lang="less">
+.header {
+  image {
+    width: 150rpx;
+    height: 150rpx;
+    border-radius: 50%;
+  }
+  button {
+    border: none;
+    background: none;
+  }
+  button::after {
+    border: none;
+  }
+}
 </style>

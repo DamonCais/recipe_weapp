@@ -1,0 +1,56 @@
+<template>
+  <view class="flex align-center" style="height:100%">
+    <view class="p-20 flex-grow fs-36 text-center">所有资源来源于网络，仅用作测试！</view>
+    <!-- Button -->
+  </view>
+</template>
+
+<script>
+// button,icon,input,cell
+import wepy from 'wepy';
+export default class base extends wepy.page {
+  config = {
+    navigationBarTitleText: '说明',
+    usingComponents: {}
+  };
+  components = {};
+
+  data = {
+    item: {
+      name: '1号营业点',
+      label: '48V充电柜',
+      address: '沃尔玛停车场',
+      id: 1,
+      distanceText: '700m'
+    }
+  };
+
+  computed = {};
+
+  methods = {
+    onClick(e) {
+      console.log(e);
+    },
+    thumbTap(e) {
+      console.log(e);
+    }
+  };
+
+  events = {};
+
+  onLoad() {}
+}
+</script>
+
+<style lang="less">
+.media-btn {
+  padding-top: 10rpx;
+  text-align: center;
+  view {
+    flex-grow: 1;
+  }
+  view + view {
+    border-left: 1px solid #ddd;
+  }
+}
+</style>

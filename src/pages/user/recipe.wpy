@@ -1,0 +1,112 @@
+<template>
+  <view>
+    <wux-cell title="我的食谱"></wux-cell>
+    <view>
+      <view wx:if="{{recipe.length==0}}" class="text-center p-20">暂未添加食谱</view>
+      <block wx:for="{{recipe}}" wx:key>
+        <wux-cell title="{{item.title}}" data-id="{{item.id}}" @tap="tapRecipe" is-link></wux-cell>
+        <!-- <jvc-media
+          @Tap="Tap"
+          data-id="{{item.id}}"
+          thumb="{{item.cover}}"
+          thumb-style="border-radius: 30rpx"
+          title="{{item.title}}"
+          label="{{item.mainingredient}}"
+          username="{{item.username}}"
+          dateline="{{item.dateline}}"
+        ></jvc-media>-->
+      </block>
+    </view>
+  </view>
+</template>
+
+<script>
+// button,icon,input,cell
+import wepy from 'wepy';
+import api from '@/api/api';
+import tip from '@/utils/tip';
+import { recipeTabs } from '@/utils/tabs';
+export default class recipe extends wepy.page {
+  config = {
+    navigationBarTitleText: '菜谱',
+    usingComponents: {
+      'wux-cell': '../../wux/cell/index',
+
+      'jvc-media': '../../wux/jvc_media/index',
+      'wux-search-bar': '../../wux/search-bar/index',
+      'wux-tabs': '../../wux/tabs/index',
+      'wux-tab': '../../wux/tab/index',
+      'wux-badge': '../../wux/badge/index'
+    }
+  };
+  components = {};
+
+  data = {
+    keyWord: '',
+    //
+    currentTab: 'tab0',
+    tabs: recipeTabs,
+    recipe: []
+  };
+
+  computed = {};
+
+  methods = {
+    tapRecipe(e) {
+      let { id } = e.currentTarget.dataset;
+      wepy.navigateTo({ url: '/pages/recipe/recipe?id=' + id });
+
+      console.log(e);
+    },
+    onConfirm(e) {
+      console.log(e);
+      this.recipe = [];
+      this.keyWord = e.detail.value;
+      this.filter.page = 1;
+      this.getRecipeByKewWord();
+    },
+    onClear() {},
+    onTabChange(e) {
+      console.log(e);
+      this.currentTab = e.detail.key;
+      let index = parseInt(this.currentTab.substr(3));
+      this.filter = this.tabs[index];
+      this.recipe = [];
+      this.getRecipe();
+    },
+    Tap(e) {
+      let { id } = e.currentTarget.dataset;
+      wepy.navigateTo({ url: '/pages/recipe/recipe?id=' + id });
+
+      console.log(e);
+    }
+  };
+
+  events = {};
+  parse(key) {
+    let val = null;
+    try {
+      val = JSON.parse(wepy.getStorageSync(key));
+    } catch (error) {}
+    return val;
+  }
+  onLoad() {
+    this.recipe = this.parse('recipe') || [];
+    this.$apply();
+  }
+  onShow() {
+    this.recipe = this.parse('recipe') || [];
+    this.$apply();
+  }
+}
+</script>
+
+<style lang="less">
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+}
+</style>

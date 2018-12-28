@@ -1,7 +1,7 @@
 <template>
   <view>
     <view class="pv-20 bg-white">
-      <view class="fs-48">{{recipe.title}}</view>
+      <view class="fs-48 text-center ph-20">{{recipe.title}}</view>
       <view>{{recipe.description}}</view>
     </view>
     <wux-cell-group title="材料">
@@ -9,17 +9,22 @@
     </wux-cell-group>
     <view class="p-20 c666">制作步骤：</view>
     <view>
-      <myTabs :currentIndex.sync="currentIndex" :swiperList.sync="step" />
+      <myTabs :currentIndex.sync="currentIndex" :swiperList.sync="step"/>
     </view>
     <view style="margin-bottom:150rpx;">
-      <mySwiper :currentIndex.sync="currentIndex" :swiperList.sync="step" @swiperChange.user="swiperChange" swiperHeight="600rpx"></mySwiper>
+      <mySwiper
+        :currentIndex.sync="currentIndex"
+        :swiperList.sync="step"
+        @swiperChange.user="swiperChange"
+        swiperHeight="600rpx"
+      ></mySwiper>
     </view>
     <view class="flex footer">
-      <view class="flex-grow">
-        <button class="wux-balanced--bg fs-36" open-type="share">分享</button>
+      <view class="flex-grow wux-balanced--bg">
+        <button class="fs-36" open-type="share">分享</button>
       </view>
-      <view class="flex-grow">
-        <button class="wux-energized--bg fs-36">收藏</button>
+      <view class="flex-grow {{collected?'wux-assertive--bg':'wux-energized--bg'}}">
+        <button @tap="tapCollect" class="fs-36">{{collected?'取消收藏':'添加收藏'}}</button>
       </view>
     </view>
   </view>
@@ -54,6 +59,7 @@ export default class recipe extends wepy.page {
   data = {
     recipeId: '',
     recipe: {},
+    collected: false,
     material: [],
     step: [],
     currentIndex: 0
@@ -62,6 +68,26 @@ export default class recipe extends wepy.page {
   computed = {};
 
   methods = {
+    tapCollect() {
+      if (this.collected) {
+        let arr = this.parse('recipe') || [];
+
+        wepy.setStorageSync(
+          'recipe',
+          JSON.stringify(arr.filter(a => a.id != this.recipeId))
+        );
+      } else {
+        let arr = this.parse('recipe') || [];
+        arr.push({
+          id: this.recipeId,
+          title: this.recipe.title
+        });
+        console.log(JSON.stringify(arr));
+        wepy.setStorageSync('recipe', JSON.stringify(arr));
+      }
+      this.collected = !this.collected;
+      this.$apply();
+    },
     onConfirm() {},
     onClear() {},
     swiperChange(e) {
@@ -77,8 +103,19 @@ export default class recipe extends wepy.page {
 
   events = {};
   onBottom;
+  parse(key) {
+    let val = null;
+    try {
+      val = JSON.parse(wepy.getStorageSync(key));
+    } catch (error) {}
+    return val;
+  }
   onLoad({ id }) {
+    let arr = this.parse('recipe') || [];
+    console.log(arr);
     this.recipeId = id;
+    this.collected = Boolean(arr.findIndex(a => a.id === this.recipeId) != -1);
+
     wepy.showShareMenu({ withShareTicket: true });
     this.getRecipeById();
   }
@@ -118,8 +155,13 @@ export default class recipe extends wepy.page {
   text-align: center;
   background: white;
   button {
-    border: 0;
+    border: none;
+    background: none;
+
     border-radius: none;
+  }
+  button::after {
+    border: none;
   }
 }
 </style>
