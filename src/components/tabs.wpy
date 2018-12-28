@@ -8,7 +8,7 @@
       class="i-class i-tabs-tab"
     >
       <view
-        class="ph-20 flex column align-center justify-center"
+        class="ph-20 flex column align-center justify-center {{currentIndex==index?'tab-current':'tab-other'}}"
         style="zoom:{{currentIndex==index?'1.3':'1'}};"
       >
         <!-- <image
@@ -54,6 +54,12 @@ export default class tabs extends wepy.component {
 </script>
 
 <style lang="less">
+.tab-current {
+  color: #000;
+}
+.tab-other {
+  color: #999;
+}
 .i-tabs::after {
   content: '';
   position: absolute;

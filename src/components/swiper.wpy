@@ -15,7 +15,7 @@
     >
       <view wx:for="{{swiperList}}" wx:for-index="index">
         <swiper-item>
-          <view class="item-wrapper" style="padding:{{ currentIndex===index?'20rpx':'40rpx'}}">
+          <view class="item-wrapper {{ currentIndex===index?'item-current':''}} " style="padding:{{ currentIndex===index?'20rpx':'40rpx'}}">
             <view class="item-border bg-white flex column">
               <image src="{{item.image.contentUrl}}" class="slide-image">
               <view class="p-20 flex column justify-space-between flex-grow">
@@ -92,12 +92,13 @@ export default class swiper extends wepy.component {
   // height: 800rpx;
 }
 .item-wrapper {
+      opacity: 0.5;
+
   box-sizing: border-box;
   height: 100%;
   transition: all 0.4s ease;
   display: flex;
   flex-direction: column;
-
   .item-border {
     border: 1px solid #ddd;
     // border-radius: 20rpx;
@@ -109,5 +110,9 @@ export default class swiper extends wepy.component {
     // border-top-right-radius: 20rpx;
     // border-top-left-radius: 20rpx;
   }
+}
+.item-current{
+    opacity: 1;
+
 }
 </style>

@@ -155,6 +155,7 @@ export default class recipe extends wepy.page {
   text-align: center;
   background: white;
   button {
+    color: #fff;
     border: none;
     background: none;
 
