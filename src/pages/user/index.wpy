@@ -29,7 +29,7 @@
 import wepy from 'wepy';
 export default class base extends wepy.page {
   config = {
-    navigationBarTitleText: 'test',
+    navigationBarTitleText: '我的',
     usingComponents: {
       'jvc-button': '../../iview/jvc_button/index',
 

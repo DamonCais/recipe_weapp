@@ -1,12 +1,27 @@
 <template>
   <view>
-    <view style="margin-top:90px;" class="p-20">
+    <view style="margin-top:80px;" class="p-20">
       <block wx:for="{{calorie}}" wx:key>
-        <jvc-media @Tap="Tap" data-detail="{{item.detail}}" thumb="{{item.img}}" thumb-style="border-radius: 30rpx" title="{{item.title}}" label="{{item.calorie}}"></jvc-media>
+        <jvc-media
+          @Tap="Tap"
+          data-detail="{{item.detail}}"
+          thumb="{{item.img}}"
+          thumb-style="border-radius: 30rpx"
+          title="{{item.title}}"
+          label="{{item.calorie}}"
+        ></jvc-media>
       </block>
     </view>
     <view class="header">
-      <wux-search-bar clear="" show-cancel value="{{ keyWord }}" controlled placeholder="Search" bind:confirm="onConfirm" bind:clear="onClear" />
+      <wux-search-bar
+        clear=""
+        show-cancel
+        value="{{ keyWord }}"
+        controlled
+        placeholder="Search"
+        bind:confirm="onConfirm"
+        bind:clear="onClear"
+      />
       <wux-tabs scroll controlled current="{{ currentTab }}" bindchange="onTabChange">
         <block wx:for="{{tabs}}" wx:key>
           <wux-tab key="tab{{index}}" title="{{item.text}}"></wux-tab>
@@ -92,7 +107,6 @@ export default class recipe extends wepy.page {
     tip.loading();
     let res = await api.get(`/getCalorieByKeyWord`, { keyWord: this.keyWord });
     this.calorie = res.data;
-    this.keyWord = '';
     this.$apply();
     tip.loaded();
   }

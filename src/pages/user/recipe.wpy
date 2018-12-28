@@ -1,11 +1,13 @@
 <template>
   <view>
     <wux-cell title="我的食谱"></wux-cell>
-    <view>
+    <view class="p-20">
       <view wx:if="{{recipe.length==0}}" class="text-center p-20">暂未添加食谱</view>
-      <block wx:for="{{recipe}}" wx:key>
+      <!-- <block wx:for="{{recipe}}" wx:key>
         <wux-cell title="{{item.title}}" data-id="{{item.id}}" @tap="tapRecipe" is-link></wux-cell>
-        <!-- <jvc-media
+      </block>-->
+      <block wx:for="{{recipe}}" wx:key>
+        <jvc-media
           @Tap="Tap"
           data-id="{{item.id}}"
           thumb="{{item.cover}}"
@@ -14,7 +16,7 @@
           label="{{item.mainingredient}}"
           username="{{item.username}}"
           dateline="{{item.dateline}}"
-        ></jvc-media>-->
+        ></jvc-media>
       </block>
     </view>
   </view>

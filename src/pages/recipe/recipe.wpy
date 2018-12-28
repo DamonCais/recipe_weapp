@@ -1,8 +1,8 @@
 <template>
   <view>
+    <image src="{{cover}}" mode="scaleToFill" style="width:750rpx;height:750rpx;">
     <view class="pv-20 bg-white">
-      <view class="fs-48 text-center ph-20">{{recipe.title}}</view>
-      <view>{{recipe.description}}</view>
+      <view class="text-indent">{{recipe.description}}</view>
     </view>
     <wux-cell-group title="材料">
       <wux-cell wx:for="{{material}}" title="{{item.name}}" extra="{{item.quantity}}"></wux-cell>
@@ -36,6 +36,8 @@ import wepy from 'wepy';
 import api from '@/api/api';
 import tip from '@/utils/tip';
 import { tabs } from '@/utils/tabs';
+import { parseTime } from '@/utils/util';
+
 import mySwiper from '@/components/swiper';
 import myTabs from '@/components/tabs';
 export default class recipe extends wepy.page {
@@ -62,7 +64,8 @@ export default class recipe extends wepy.page {
     collected: false,
     material: [],
     step: [],
-    currentIndex: 0
+    currentIndex: 0,
+    cover: ''
   };
 
   computed = {};
@@ -80,7 +83,11 @@ export default class recipe extends wepy.page {
         let arr = this.parse('recipe') || [];
         arr.push({
           id: this.recipeId,
-          title: this.recipe.title
+          title: this.recipe.title,
+          cover: this.cover,
+          mainingredient: this.recipe.recipeIngredient.join(','),
+          username: this.recipe.author.name || '',
+          dateline: parseTime(this.recipe.pubDate, '{y}-{m}-{d} {h}:{i}')
         });
         console.log(JSON.stringify(arr));
         wepy.setStorageSync('recipe', JSON.stringify(arr));
@@ -127,6 +134,7 @@ export default class recipe extends wepy.page {
     let res = await api.get(`/getRecipeById`, obj);
     console.log(res.data);
     this.recipe = res.data;
+    this.cover = this.recipe.image.split('?')[0] || '';
     wepy.setNavigationBarTitle({ title: this.recipe.title });
 
     this.material = this.recipe.data.Cookbook.material;
