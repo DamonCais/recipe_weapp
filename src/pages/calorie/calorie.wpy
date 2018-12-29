@@ -1,39 +1,36 @@
 <template>
-
   <view>
     <view style="padding:20rpx 20rpx 0;">
-      <jvc-media thumb="{{calorie.image}}" thumb-style="border-radius: 30rpx" title="{{calorie.cont_h3}}" label="分类:{{calorie.type}}" username="减肥人群:{{calorie.suggest}}">
+      <jvc-media
+        thumb="{{calorie.image}}"
+        thumb-style="border-radius: 30rpx"
+        title="{{calorie.cont_h3}}"
+        label="分类:{{calorie.type}}"
+        username="减肥人群:{{calorie.suggest}}"
+      >
         <view class="flex column">
           <wux-grids bordered="{{false}}" col="4">
             <wux-grid wx:for="{{calorie.baseBox}}">
               <view class="wux-assertive">{{item}}</view>
-
               <view class="fs-24">{{tabs[index]}}</view>
             </wux-grid>
           </wux-grids>
-          <view class="text-indent fs-24 pb-20">
-            {{calorie.tips}}
-          </view>
+          <view class="text-indent fs-24 pb-20">{{calorie.tips}}</view>
         </view>
-
       </jvc-media>
     </view>
-
     <wux-cell-group title="热量分解">
-
       <view class="p-20 flex justify-center">
         <!-- '#11c1f3', '#ef473a', '#ffc900',  -->
         <jvc-circle size="120" values="{{values}}" percent="100" color="#33cd5f"></jvc-circle>
         <view class="p-20 flex column justify-space-around">
           <view class="flex align-center" wx:for="{{values2}}">
-            <wux-icon class="pr-20" color="{{colors[index]}}" type="ios-radio-button-on" />
-            {{tabs[index+1]}}:{{item}}%</view>
-
+            <wux-icon class="pr-20" color="{{colors[index]}}" type="ios-radio-button-on"/>
+            {{tabs[index+1]}}:{{item}}%
+          </view>
         </view>
       </view>
-
     </wux-cell-group>
-
     <wux-cell-group title="食用分量">
       <wux-cell wx:for="{{calorie.unit}}" title="{{item.heat}}" extra="{{item.unit}}"></wux-cell>
     </wux-cell-group>
@@ -89,6 +86,7 @@ export default class base extends wepy.page {
   onLoad({ detail }) {
     this.calorieDetail = detail;
     this.getCalorieDetail();
+    wepy.showShareMenu({ withShareTicket: true });
   }
   async getCalorieDetail() {
     tip.loading();

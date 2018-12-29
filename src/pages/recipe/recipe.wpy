@@ -20,10 +20,10 @@
       ></mySwiper>
     </view>
     <view class="flex footer">
-      <view class="flex-grow wux-balanced--bg">
+      <view style="flex-basis:50%;" class="   wux-balanced--bg">
         <button class="fs-36" open-type="share">分享</button>
       </view>
-      <view class="flex-grow {{collected?'wux-assertive--bg':'wux-energized--bg'}}">
+      <view style="flex-basis:50%;" class="  {{collected?'wux-assertive--bg':'wux-energized--bg'}}">
         <button @tap="tapCollect" class="fs-36">{{collected?'取消收藏':'添加收藏'}}</button>
       </view>
     </view>
@@ -109,7 +109,6 @@ export default class recipe extends wepy.page {
   };
 
   events = {};
-  onBottom;
   parse(key) {
     let val = null;
     try {
@@ -142,6 +141,12 @@ export default class recipe extends wepy.page {
     this.$apply();
     tip.loaded();
   }
+  onShareAppMessage() {
+    return {
+      path: `/pages/recipe/index?recipeId=${this.recipeId}`,
+    };
+  }
+  
   onTabChange() {}
 }
 </script>

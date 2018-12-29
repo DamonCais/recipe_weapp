@@ -1,0 +1,57 @@
+<template>
+  <view class="p-20"></view>
+</template>
+
+<script>
+// button,icon,input,cell
+import wepy from 'wepy';
+export default class base extends wepy.page {
+  config = {
+    navigationBarTitleText: '首页',
+    usingComponents: {
+      'jvc-button': '../iview/jvc_button/index',
+      'jvc-icon': '../iview/jvc_icon/index',
+      'jvc-media': '../wux/jvc_media/index',
+      'jvc-media-b': '../wux/jvc_media_b/index',
+      'wux-tag': '../wux/tag/index',
+
+      'i-input': '../../iview/input/index',
+      'i-cell-group': '../../iview/cell-group/index',
+      'i-cell': '../../iview/cell/index',
+      'i-panel': '../../iview/panel/index',
+      'i-load-more': '../../iview/load-more/index'
+    }
+  };
+  components = {};
+
+  data = {};
+
+  computed = {};
+
+  methods = {
+    onClick(e) {
+      console.log(e);
+    },
+    thumbTap(e) {
+      console.log(e);
+    }
+  };
+
+  events = {};
+
+  onLoad({ recipeId }) {}
+}
+</script>
+
+<style lang="less">
+.media-btn {
+  padding-top: 10rpx;
+  text-align: center;
+  view {
+    flex-grow: 1;
+  }
+  view + view {
+    border-left: 1px solid #ddd;
+  }
+}
+</style>

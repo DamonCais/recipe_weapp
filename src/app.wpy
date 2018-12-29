@@ -67,7 +67,9 @@ export default class extends wepy.app {
     userSpecialInfo: null,
     location: null,
     encryptedOBJ: null,
-    loginObj: null
+    loginObj: null,
+    option: null,
+    isLoged: false
   };
 
   constructor() {
@@ -76,6 +78,9 @@ export default class extends wepy.app {
     this.use('promisify');
   }
 
-  onLaunch() {}
+  onLaunch(option) {
+    console.log(option);
+    this.option = option;
+  }
 }
 </script>

@@ -95,7 +95,10 @@ export default class recipe extends wepy.page {
 
   events = {};
   onBottom;
-  onLoad() {
+  onLoad({ recipeId }) {
+    if (recipeId) {
+      wepy.navigateTo({ url: `/pages/recipe/recipe?id=${recipeId}` });
+    }
     this.getRecipe();
   }
   onReachBottom() {
